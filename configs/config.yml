@@ -1,0 +1,2 @@
+suggest:
+  handler: "personal_check_handler,recent_check_handler,city_check_handler,new_check_handler"

@@ -13,3 +13,9 @@ func Pay(c *gin.Context) {
 	pay := service.Pay(body)
 	c.JSON(http.StatusOK, gin.H{"data": pay})
 }
+func Suggest(c *gin.Context) {
+	var userName string
+	c.Bind(&userName)
+	suggestList := service.Suggest(userName)
+	c.JSON(http.StatusOK, gin.H{"data": suggestList})
+}

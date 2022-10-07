@@ -4,13 +4,17 @@ import (
 	"design-go/pay/strategy"
 	"design-go/pay/strategyEnum"
 	"reflect"
+	"sync"
 )
 
+var PayStrategyMap sync.Map = sync.Map{}
+
 func GetPayStrategy(enum strategyEnum.StrategyEnum) strategy.PayStrategy {
-	refVal := reflect.New(enum.GetType())
-	payStrategy, ok := refVal.Interface().(strategy.PayStrategy)
-	if !ok {
-		return nil
+	payStrategy, ex := PayStrategyMap.Load(enum.GetType())
+	if !ex {
+		refVal := reflect.New(enum.GetType())
+		payStrategy, _ = refVal.Interface().(strategy.PayStrategy)
+		PayStrategyMap.Store(enum.GetType(), payStrategy)
 	}
-	return payStrategy
+	return payStrategy.(strategy.PayStrategy)
 }

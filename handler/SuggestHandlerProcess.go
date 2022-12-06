@@ -2,7 +2,6 @@ package handler
 
 import (
 	"design-go/pojo"
-	"fmt"
 	"github.com/spf13/viper"
 	"log"
 	"reflect"
@@ -20,7 +19,6 @@ func ProcessHandler(userInfo pojo.UserInfo) []string {
 			handler := ref.Interface().(AbstractSuggestRequirementHandler)
 			processHandler := handler.processHandler(userInfo, temp)
 			temp = processHandler
-			fmt.Println("------", temp)
 		}
 	}
 	return temp
